@@ -1,4 +1,4 @@
-package com.example.danbammobile;
+package com.example.danbammobile.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.danbammobile.MainActivity;
+import com.example.danbammobile.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
