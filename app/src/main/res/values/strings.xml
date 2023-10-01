@@ -13,4 +13,9 @@
 
     <string name="ProjectName">Welcome to DanBam</string>
     <string name="login">Login</string>
+    <string name="daily_meal">Daily Meal</string>
+    <string name="favourite">Favourite</string>
+    <string name="my_cart">My Cart</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

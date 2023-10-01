@@ -19,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        startActivity(new Intent(WelcomeActivity.this, RegisterActivity.class));
+        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
     }
 
     public void login(View view) {
