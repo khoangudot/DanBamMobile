@@ -40,6 +40,7 @@
         android:hint="Full Name"
         android:minHeight="48dp"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txtEmail"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,6 +58,7 @@
         android:hint="Email"
         android:minHeight="48dp"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txtPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtFullName"
@@ -70,9 +72,10 @@
         android:backgroundTint="#CCCCCC"
         android:drawableLeft="@drawable/baseline_key_24"
         android:drawablePadding="13dp"
-        android:hint="Password"
+        android:hint="Passwor"
         android:minHeight="48dp"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,18 +116,19 @@
         app:layout_constraintVertical_bias="0.493" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/akronim"
-        android:text="Sign In"
-        android:textSize="16sp"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        android:onClick="login"
+        android:text="Login"
         android:textColor="@color/purple_500"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
-        android:onClick="login"
-        />
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
