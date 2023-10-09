@@ -10,21 +10,36 @@
         android:name="com.example.danbammobile.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
     <fragment
-        android:id="@+id/nav_daily_meal"
-        android:name="com.example.danbammobile.ui.gallery.DailyMealFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_daily_meal" />
-
+        android:id="@+id/nav_category"
+        android:name="com.example.danbammobile.ui.category.CategoryFragment"
+        android:label="@string/menu_category"
+        tools:layout="@layout/fragment_category" />
     <fragment
-        android:id="@+id/nav_favourite"
-        android:name="com.example.danbammobile.ui.slideshow.FavouriteFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_favourite" />
+        android:id="@+id/nav_profile"
+        android:name="com.example.danbammobile.ui.Profile.ProfileFragment"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_offers"
+        android:name="com.example.danbammobile.ui.Offers.OffersFragment"
+        android:label="@string/menu_offers"
+        tools:layout="@layout/fragment_offers" />
+    <fragment
+        android:id="@+id/nav_new_products"
+        android:name="com.example.danbammobile.ui.NewProduct.NewProductFragment"
+        android:label="@string/menu_new_products"
+        tools:layout="@layout/fragment_new_product" />
+    <fragment
+        android:id="@+id/nav_my_order"
+        android:name="com.example.danbammobile.ui.Order.OrderFragment"
+        android:label="@string/menu_my_order"
+        tools:layout="@layout/fragment_order" />
     <fragment
         android:id="@+id/nav_my_cart"
-        android:name="com.example.danbammobile.MyCartFragment"
-        android:label="fragment_my_cart"
+        android:name="com.example.danbammobile.ui.MyCart.MyCartFragment"
+        android:label="@string/menu_my_cart"
         tools:layout="@layout/fragment_my_cart" />
+
+
 </navigation>

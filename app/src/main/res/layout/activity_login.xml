@@ -31,15 +31,16 @@
         app:layout_constraintVertical_bias="0.113" />
 
     <EditText
-        android:id="@+id/txtFullName"
+        android:id="@+id/txtEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#CCCCCC"
         android:drawableLeft="@drawable/baseline_account_circle_24"
         android:drawablePadding="13dp"
-        android:hint="Full Name"
+        android:hint="Email"
         android:minHeight="48dp"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txtPassword"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,12 +57,14 @@
         android:drawableLeft="@drawable/baseline_key_24"
         android:drawablePadding="13dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:minHeight="48dp"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFullName"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
         app:layout_constraintVertical_bias="0.049"
         app:layout_constraintWidth_percent=".8" />
 
@@ -86,7 +89,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_bg_design"
-        android:onClick="register"
         android:padding="12dp"
         android:text="Login"
         android:textAllCaps="false"
@@ -114,7 +116,7 @@
         app:layout_constraintVertical_bias="0.493" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/akronim"
@@ -125,7 +127,10 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@+id/textView2"
-        android:onClick="register"
+
         />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

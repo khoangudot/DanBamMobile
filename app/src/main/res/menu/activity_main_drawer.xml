@@ -11,16 +11,28 @@
             android:icon="@drawable/baseline_home_24"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_daily_meal"
-            android:icon="@drawable/baseline_all_inclusive_24"
-            android:title="@string/daily_meal" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="@string/menu_profile" />
         <item
-            android:id="@+id/nav_favourite"
-            android:icon="@drawable/baseline_favorite_24"
-            android:title="@string/favourite" />
+            android:id="@+id/nav_category"
+            android:icon="@drawable/ic_category"
+            android:title="@string/menu_category" />
+        <item
+            android:id="@+id/nav_offers"
+            android:icon="@drawable/ic_offer"
+            android:title="@string/menu_offers" />
+        <item
+            android:id="@+id/nav_new_products"
+            android:icon="@drawable/ic_new_products"
+            android:title="@string/menu_new_products" />
+        <item
+            android:id="@+id/nav_my_order"
+            android:icon="@drawable/ic_my_cart"
+            android:title="@string/menu_my_order" />
         <item
             android:id="@+id/nav_my_cart"
-            android:icon="@drawable/baseline_shopping_cart_24"
-            android:title="@string/my_cart" />
+            android:icon="@drawable/ic_my_order"
+            android:title="@string/menu_my_cart" />
     </group>
 </menu>
