@@ -41,5 +41,4 @@
         android:label="@string/menu_my_cart"
         tools:layout="@layout/fragment_my_cart" />
 
-
 </navigation>
