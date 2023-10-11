@@ -23,14 +23,15 @@
                 android:drawableRight="@drawable/baseline_search_24"
                 android:drawablePadding="9dp"
 
-                android:fontFamily="@font/akronim"
+                android:fontFamily="@font/amita"
                 android:hint="Search your Food!"
+
                 android:minHeight="48dp"
 
                 android:padding="10dp"
                 android:textColor="@color/white"
 
-                android:textColorHint="@color/white"
+                android:textColorHint="@color/purple_700"
                 android:textSize="18sp"
                 />
 
@@ -57,7 +58,7 @@
                android:layout_height="wrap_content"
                android:layout_weight="1"
                android:fontFamily="@font/amita"
-               android:text="Popular Products"
+               android:text="Popular "
                android:textSize="18sp"
                android:textStyle="bold|italic"
                android:textColor="@color/white"
