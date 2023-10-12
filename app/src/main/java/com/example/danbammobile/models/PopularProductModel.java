@@ -5,18 +5,18 @@ public class PopularProductModel {
     private  String description;
     private String type;
     private String rating;
-    private String discount;
+    private String price;
     private String img_url;
 
     public PopularProductModel() {
     }
 
-    public PopularProductModel(String name, String description, String type, String rating, String discount, String img_url) {
+    public PopularProductModel(String name, String description, String type, String rating, String price, String img_url) {
         this.name = name;
         this.description = description;
         this.type = type;
         this.rating = rating;
-        this.discount = discount;
+        this.price = price;
         this.img_url = img_url;
     }
 
@@ -52,12 +52,12 @@ public class PopularProductModel {
         this.rating = rating;
     }
 
-    public String getDiscount() {
-        return discount;
+    public String getPrice() {
+        return price;
     }
 
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getImg_url() {

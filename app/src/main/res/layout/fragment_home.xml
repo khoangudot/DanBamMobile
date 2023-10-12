@@ -53,31 +53,11 @@
            android:weightSum="2"
            >
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_weight="1"
-               android:fontFamily="@font/amita"
-               android:text="Popular "
-               android:textSize="18sp"
-               android:textStyle="bold|italic"
-               android:textColor="@color/white"
-               />
-           <TextView
-               android:id="@+id/view_all_popular_products"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-                android:fontFamily="@font/amita"
-               android:text="View All"
-               android:layout_weight="1"
-               android:textAlignment="textEnd"
-               android:textColor="@color/purple_500"
-               android:textSize="16sp"
-                android:layout_marginRight="7dp"
-               />
+
+
        </LinearLayout>
        <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/rec_popular_products"
+           android:id="@+id/rec_home_category"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_margin="7dp"
@@ -96,30 +76,20 @@
                android:layout_height="wrap_content"
                android:layout_weight="1"
                android:fontFamily="@font/amita"
-               android:text="Explore Products"
+               android:text="Hot Combo "
                android:textSize="18sp"
                android:textStyle="bold|italic"
                android:textColor="@color/white"
                />
-           <TextView
-               android:id="@+id/view_all_explore_products"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:fontFamily="@font/amita"
-               android:text="View All"
-               android:layout_weight="1"
-               android:textAlignment="textEnd"
-               android:textColor="@color/purple_500"
-               android:textSize="16sp"
-               android:layout_marginRight="7dp"
-               />
+
        </LinearLayout>
        <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/rec_explore_products"
+           android:id="@+id/rec_popular_products"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_margin="7dp"
            />
+
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"

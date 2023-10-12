@@ -39,7 +39,7 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
 
         holder.popularProductDescription.setText(popularProductModelList.get(position).getDescription());
         holder.popularProductRating.setText(popularProductModelList.get(position).getRating());
-        holder.popularProductDiscount.setText(popularProductModelList.get(position).getDiscount());
+        holder.popularProductPrice.setText(popularProductModelList.get(position).getPrice());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView popularProductImage;
-        TextView popularProductName, popularProductDescription, popularProductRating, popularProductDiscount;
+        TextView popularProductName, popularProductDescription, popularProductRating, popularProductPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             popularProductName = itemView.findViewById(R.id.popular_product_name);
@@ -57,7 +57,7 @@ public class PopularProductAdapter extends RecyclerView.Adapter<PopularProductAd
 
             popularProductDescription = itemView.findViewById(R.id.popular_product_description);
             popularProductRating = itemView.findViewById(R.id.popular_product_rating);
-            popularProductDiscount = itemView.findViewById(R.id.popular_product_discount);
+            popularProductPrice = itemView.findViewById(R.id.popular_product_price);
 
         }
     }
