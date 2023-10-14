@@ -11,34 +11,25 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/nav_category"
-        android:name="com.example.danbammobile.ui.category.CategoryFragment"
-        android:label="@string/menu_category"
-        tools:layout="@layout/fragment_category" />
+        android:id="@+id/nav_restaurant_menu"
+        android:name="com.example.danbammobile.ui.RestaurantMenu.RestaurantMenuFragment"
+        android:label="@string/nav_menu_restaurant_menu"
+        tools:layout="@layout/fragment_restaurant_menu" />
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.danbammobile.ui.Profile.ProfileFragment"
-        android:label="@string/menu_profile"
+        android:label="@string/nav_menu_profile"
         tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/nav_offers"
-        android:name="com.example.danbammobile.ui.Offers.OffersFragment"
-        android:label="@string/menu_offers"
-        tools:layout="@layout/fragment_offers" />
-    <fragment
-        android:id="@+id/nav_new_products"
-        android:name="com.example.danbammobile.ui.NewProduct.NewProductFragment"
-        android:label="@string/menu_new_products"
-        tools:layout="@layout/fragment_new_product" />
+
     <fragment
         android:id="@+id/nav_my_order"
         android:name="com.example.danbammobile.ui.Order.OrderFragment"
-        android:label="@string/menu_my_order"
+        android:label="@string/nav_menu_order"
         tools:layout="@layout/fragment_order" />
     <fragment
         android:id="@+id/nav_my_cart"
         android:name="com.example.danbammobile.ui.MyCart.MyCartFragment"
-        android:label="@string/menu_my_cart"
+        android:label="@string/nav_menu_cart"
         tools:layout="@layout/fragment_my_cart" />
 
 </navigation>

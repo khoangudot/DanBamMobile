@@ -14,25 +14,45 @@
         android:padding="5dp"
         >
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/popular_product_img"
+            android:id="@+id/home_menu_item_img"
             android:layout_width="280dp"
             android:layout_height="190dp"
             app:riv_corner_radius="14dp"
             android:scaleType="centerCrop"
             android:src="@drawable/coffe"
             />
-        <TextView
-            android:id="@+id/popular_product_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/amita"
-            android:text="Popular Products"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/home_menu_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/amita"
+                android:text=" Products"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/home_menu_item_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Discount: 30.000 "
+                android:fontFamily="@font/amita"
+                android:textColor="#BD9E3F"
+                android:textStyle="bold|italic"
+                android:textAlignment="textEnd"
+                android:layout_weight="1"
+                android:paddingRight="15dp"
+                android:layout_marginTop="10dp"
+                />
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/popular_product_description"
+            android:id="@+id/home_menu_item_description"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:text="Description"
@@ -52,7 +72,7 @@
                 android:layout_marginLeft="-5dp"
                 />
             <TextView
-                android:id="@+id/popular_product_rating"
+                android:id="@+id/home_menu_item_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5.0"
@@ -60,7 +80,7 @@
                 android:fontFamily="@font/amita"
                 />
             <TextView
-                android:id="@+id/popular_product_price"
+                android:id="@+id/home_menu_item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price: 30.000"

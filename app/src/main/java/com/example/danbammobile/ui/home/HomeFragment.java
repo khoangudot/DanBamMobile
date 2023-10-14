@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.danbammobile.R;
 import com.example.danbammobile.adapters.HomeCategoryAdapter;
-import com.example.danbammobile.adapters.PopularProductAdapter;
-import com.example.danbammobile.models.HomeCategoryModel;
-import com.example.danbammobile.models.PopularProductModel;
+import com.example.danbammobile.adapters.HomeHotComboAdapter;
+import com.example.danbammobile.adapters.HomeMenuAdapter;
+import com.example.danbammobile.models.CategoryModel;
+import com.example.danbammobile.models.HotComboModel;
+import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,18 +32,22 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView popularProductRecyclerView, homeCategoryRecyclerView;
+    ScrollView scrollView;
+    ProgressBar progressBar;
+    RecyclerView homeHotComboRecyclerView, homeCategoryRecyclerView,homeMenuRecyclerView;
     FirebaseFirestore db;
 
-    // Popular Products
-    List<PopularProductModel> popularProductModelList;
-    PopularProductAdapter popularProductAdapter;
+    // Home Hot combo
+    List<HotComboModel> hotComboModelList;
+    HomeHotComboAdapter homeHotComboAdapter;
 
     //Home Category
-    List<HomeCategoryModel> homeCategoryModelList;
+    List<CategoryModel> categoryModelList;
     HomeCategoryAdapter homeCategoryAdapter;
 
-
+    //Home Menu
+    List<ProductModel> homeProducts;
+    HomeMenuAdapter homeMenuAdapter;
 
     @Nullable
     @Override
@@ -48,18 +55,21 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home,container,false);
 
         db = FirebaseFirestore.getInstance();
-        popularProductRecyclerView = root.findViewById(R.id.rec_popular_products);
+        homeHotComboRecyclerView = root.findViewById(R.id.rec_home_hot_combo);
         homeCategoryRecyclerView = root.findViewById(R.id.rec_home_category);
+        homeMenuRecyclerView = root.findViewById(R.id.rec_home_menu);
+        scrollView = root.findViewById(R.id.home_scroll_view);
+        progressBar = root.findViewById(R.id.home_progressbar);
 
+        //Progressbar
+        progressBar.setVisibility(View.VISIBLE);
+        scrollView.setVisibility(View.GONE);
 
-        // Popular items
-        popularProductRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
-        popularProductModelList = new ArrayList<>();
-        popularProductAdapter = new PopularProductAdapter(getActivity(),popularProductModelList);
-        popularProductRecyclerView.setAdapter(popularProductAdapter);
-
-
-
+        // Home Hot Combo
+        homeHotComboRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        hotComboModelList = new ArrayList<>();
+        homeHotComboAdapter = new HomeHotComboAdapter(getActivity(), hotComboModelList);
+        homeHotComboRecyclerView.setAdapter(homeHotComboAdapter);
 
         db.collection("PopularProducts")
                 .get()
@@ -69,9 +79,11 @@ public class HomeFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                PopularProductModel popularProductModel = document.toObject(PopularProductModel.class);
-                                popularProductModelList.add(popularProductModel);
-                                popularProductAdapter.notifyDataSetChanged();
+                                HotComboModel hotComboModel = document.toObject(HotComboModel.class);
+                                hotComboModelList.add(hotComboModel);
+                                homeHotComboAdapter.notifyDataSetChanged();
+                                progressBar.setVisibility(View.GONE);
+                                scrollView.setVisibility(View.VISIBLE);
                             }
                         } else {
                             Toast.makeText(getActivity(),"Err"+task.getException(),Toast.LENGTH_SHORT).show();
@@ -81,12 +93,9 @@ public class HomeFragment extends Fragment {
 
         // Home category
         homeCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
-        homeCategoryModelList = new ArrayList<>();
-        homeCategoryAdapter = new HomeCategoryAdapter(getActivity(),homeCategoryModelList);
+        categoryModelList = new ArrayList<>();
+        homeCategoryAdapter = new HomeCategoryAdapter(getActivity(), categoryModelList);
         homeCategoryRecyclerView.setAdapter(homeCategoryAdapter);
-
-
-
 
         db.collection("Category")
                 .get()
@@ -96,9 +105,33 @@ public class HomeFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                HomeCategoryModel homeCategoryModel = document.toObject(HomeCategoryModel.class);
-                                homeCategoryModelList.add(homeCategoryModel);
+                                CategoryModel categoryModel = document.toObject(CategoryModel.class);
+                                categoryModelList.add(categoryModel);
                                 homeCategoryAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(),"Err"+task.getException(),Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+        // Home Menu
+        homeMenuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        homeProducts = new ArrayList<>();
+        homeMenuAdapter = new HomeMenuAdapter(getActivity(), homeProducts);
+        homeMenuRecyclerView.setAdapter(homeMenuAdapter);
+
+        db.collection("Product")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProductModel productModel = document.toObject(ProductModel.class);
+                                homeProducts.add(productModel);
+                                homeMenuAdapter.notifyDataSetChanged();
                             }
                         } else {
                             Toast.makeText(getActivity(),"Err"+task.getException(),Toast.LENGTH_SHORT).show();

@@ -1,6 +1,6 @@
 package com.example.danbammobile.models;
 
-public class PopularProductModel {
+public class HotComboModel {
     private String name;
     private  String description;
     private String type;
@@ -8,10 +8,10 @@ public class PopularProductModel {
     private String price;
     private String img_url;
 
-    public PopularProductModel() {
+    public HotComboModel() {
     }
 
-    public PopularProductModel(String name, String description, String type, String rating, String price, String img_url) {
+    public HotComboModel(String name, String description, String type, String rating, String price, String img_url) {
         this.name = name;
         this.description = description;
         this.type = type;

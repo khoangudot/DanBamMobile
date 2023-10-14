@@ -16,12 +16,11 @@ import com.example.danbammobile.models.CategoryModel;
 
 import java.util.List;
 
-public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapter.ViewHolder> {
-
+public class NavRestaurantMenuAdapter extends RecyclerView.Adapter<NavRestaurantMenuAdapter.ViewHolder> {
     Context context;
     List<CategoryModel> categoryModelList;
 
-    public HomeCategoryAdapter(Context context, List<CategoryModel> categoryModelList) {
+    public NavRestaurantMenuAdapter(Context context, List<CategoryModel> categoryModelList) {
         this.context = context;
         this.categoryModelList = categoryModelList;
     }
@@ -29,7 +28,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_category_items,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.nav_restaurant_menu_items,parent,false));
     }
 
     @Override
@@ -48,9 +47,8 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         TextView categoryName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoryImage = itemView.findViewById(R.id.home_category_img);
-            categoryName = itemView.findViewById(R.id.home_category_name);
-
+            categoryImage = itemView.findViewById(R.id.nav_restaurant_menu_img);
+            categoryName = itemView.findViewById(R.id.nav_restaurant_menu_name);
         }
     }
 }

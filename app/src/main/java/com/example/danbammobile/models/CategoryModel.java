@@ -1,15 +1,25 @@
 package com.example.danbammobile.models;
 
-public class HomeCategoryModel {
+public class CategoryModel {
+    private int CategoryId;
     private String CategoryName;
     private String CategoryImage;
 
-    public HomeCategoryModel() {
+    public CategoryModel() {
     }
 
-    public HomeCategoryModel(String categoryName, String categoryImage) {
+    public CategoryModel(int categoryId, String categoryName, String categoryImage) {
+        CategoryId = categoryId;
         CategoryName = categoryName;
         CategoryImage = categoryImage;
+    }
+
+    public int getCategoryId() {
+        return CategoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        CategoryId = categoryId;
     }
 
     public String getCategoryName() {
