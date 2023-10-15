@@ -1,6 +1,8 @@
 package com.example.danbammobile.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.danbammobile.R;
+import com.example.danbammobile.activities.NavMenuProductActivity;
 import com.example.danbammobile.models.CategoryModel;
 
 import java.util.List;
@@ -32,9 +35,19 @@ public class NavRestaurantMenuAdapter extends RecyclerView.Adapter<NavRestaurant
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Glide.with(context).load(categoryModelList.get(position).getCategoryImage()).into(holder.categoryImage);
         holder.categoryName.setText(categoryModelList.get(position).getCategoryName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, NavMenuProductActivity.class);
+                intent.putExtra("CategoryId",categoryModelList.get(position).getCategoryId());
+                intent.putExtra("CategoryImage",categoryModelList.get(position).getCategoryImage());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
