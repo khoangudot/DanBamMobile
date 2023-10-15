@@ -14,14 +14,13 @@ import com.bumptech.glide.Glide;
 import com.example.danbammobile.R;
 import com.example.danbammobile.models.ProductModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHolder> {
+public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCategoryProductsAdapter.ViewHolder> {
     Context context;
     List<ProductModel> productModels;
 
-    public HomeMenuAdapter(Context context, List<ProductModel> productModels) {
+    public HomeCategoryProductsAdapter(Context context, List<ProductModel> productModels) {
         this.context = context;
         this.productModels = productModels;
     }
@@ -29,7 +28,7 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_menu_items,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_category_product_item,parent,false));
     }
 
     @Override
@@ -54,12 +53,12 @@ public class HomeMenuAdapter extends RecyclerView.Adapter<HomeMenuAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            productName = itemView.findViewById(R.id.home_menu_item_name);
-            productDescription = itemView.findViewById(R.id.home_menu_item_description);
-            productImage = itemView.findViewById(R.id.home_menu_item_img);
-            productRating = itemView.findViewById(R.id.home_menu_item_rating);
-            productPrice = itemView.findViewById(R.id.home_menu_item_price);
-            productDiscount = itemView.findViewById(R.id.home_menu_item_discount);
+            productName = itemView.findViewById(R.id.home_category_product_item_name);
+            productDescription = itemView.findViewById(R.id.home_category_product_item_description);
+            productImage = itemView.findViewById(R.id.home_category_product_item_img);
+            productRating = itemView.findViewById(R.id.home_category_product_item_rating);
+            productPrice = itemView.findViewById(R.id.home_category_product_item_price);
+            productDiscount = itemView.findViewById(R.id.home_category_product_item_discount);
         }
     }
 }

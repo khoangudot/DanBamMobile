@@ -52,12 +52,12 @@ public class HomeHotComboAdapter extends RecyclerView.Adapter<HomeHotComboAdapte
         TextView popularProductName, popularProductDescription, popularProductRating, popularProductPrice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            popularProductName = itemView.findViewById(R.id.home_hot_combo_name);
-            popularProductImage = itemView.findViewById(R.id.home_hot_combo_img);
+            popularProductName = itemView.findViewById(R.id.home_hot_combo_item_name);
+            popularProductImage = itemView.findViewById(R.id.home_hot_combo_item_img);
 
-            popularProductDescription = itemView.findViewById(R.id.home_hot_combo_description);
-            popularProductRating = itemView.findViewById(R.id.home_hot_combo_rating);
-            popularProductPrice = itemView.findViewById(R.id.home_hot_combo_price);
+            popularProductDescription = itemView.findViewById(R.id.home_hot_combo_item_description);
+            popularProductRating = itemView.findViewById(R.id.home_hot_combo_item_rating);
+            popularProductPrice = itemView.findViewById(R.id.home_hot_combo_item_price);
 
         }
     }

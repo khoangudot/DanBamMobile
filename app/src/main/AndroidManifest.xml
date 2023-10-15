@@ -13,17 +13,20 @@
         android:theme="@style/Theme.DanBamMobile"
         tools:targetApi="31">
         <activity
+            android:name=".activities.HomeCategoryProductsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.NavMenuProductActivity"
             android:exported="false" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".activities.WelcomeActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

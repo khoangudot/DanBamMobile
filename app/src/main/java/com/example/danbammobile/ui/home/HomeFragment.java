@@ -17,7 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.danbammobile.R;
 import com.example.danbammobile.adapters.HomeCategoryAdapter;
 import com.example.danbammobile.adapters.HomeHotComboAdapter;
-import com.example.danbammobile.adapters.HomeMenuAdapter;
+import com.example.danbammobile.adapters.HomeCategoryProductsAdapter;
+import com.example.danbammobile.interfaces.HomeLoadProducts;
 import com.example.danbammobile.models.CategoryModel;
 import com.example.danbammobile.models.HotComboModel;
 import com.example.danbammobile.models.ProductModel;
@@ -28,9 +29,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeLoadProducts {
 
     ScrollView scrollView;
     ProgressBar progressBar;
@@ -42,12 +44,13 @@ public class HomeFragment extends Fragment {
     HomeHotComboAdapter homeHotComboAdapter;
 
     //Home Category
-    List<CategoryModel> categoryModelList;
+    ArrayList<CategoryModel> categoryModelList;
     HomeCategoryAdapter homeCategoryAdapter;
 
     //Home Menu
-    List<ProductModel> homeProducts;
-    HomeMenuAdapter homeMenuAdapter;
+    ArrayList<ProductModel> homeProducts;
+    HomeCategoryProductsAdapter homeCategoryProductsAdapter;
+
 
     @Nullable
     @Override
@@ -94,7 +97,7 @@ public class HomeFragment extends Fragment {
         // Home category
         homeCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
         categoryModelList = new ArrayList<>();
-        homeCategoryAdapter = new HomeCategoryAdapter(getActivity(), categoryModelList);
+        homeCategoryAdapter = new HomeCategoryAdapter(getContext(),categoryModelList,getActivity(),this);
         homeCategoryRecyclerView.setAdapter(homeCategoryAdapter);
 
         db.collection("Category")
@@ -109,35 +112,25 @@ public class HomeFragment extends Fragment {
                                 categoryModelList.add(categoryModel);
                                 homeCategoryAdapter.notifyDataSetChanged();
                             }
+                            categoryModelList.sort(Comparator.comparing(CategoryModel::getCategoryId));
+                            homeCategoryAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getActivity(),"Err"+task.getException(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-        // Home Menu
-        homeMenuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
-        homeProducts = new ArrayList<>();
-        homeMenuAdapter = new HomeMenuAdapter(getActivity(), homeProducts);
-        homeMenuRecyclerView.setAdapter(homeMenuAdapter);
+       
 
-        db.collection("Product")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                ProductModel productModel = document.toObject(ProductModel.class);
-                                homeProducts.add(productModel);
-                                homeMenuAdapter.notifyDataSetChanged();
-                            }
-                        } else {
-                            Toast.makeText(getActivity(),"Err"+task.getException(),Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
         return root;
+    }
+
+    @Override
+    public void CallBack(int position, ArrayList<ProductModel> productModels) {
+        homeMenuRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        homeCategoryProductsAdapter =  new HomeCategoryProductsAdapter(getContext(),productModels);
+        homeCategoryProductsAdapter.notifyDataSetChanged();
+        homeMenuRecyclerView.setAdapter(homeCategoryProductsAdapter);
     }
 }
