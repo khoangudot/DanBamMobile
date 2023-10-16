@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "805691354197",
+    "project_id": "danbammobile",
+    "storage_bucket": "danbammobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805691354197:android:05d5fc5e8bdc0d59ec38dc",
+        "android_client_info": {
+          "package_name": "com.example.danbammobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRsUnNyvtGes4up_aufNLscdeNok9jUMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
