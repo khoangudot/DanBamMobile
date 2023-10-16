@@ -24,7 +24,7 @@ import com.google.firebase.ktx.Firebase;
 
 public class RegisterActivity extends AppCompatActivity {
     Button register;
-    EditText name,email, password;
+    EditText username,email, password;
     TextView login;
 
     ProgressBar progressBar ;
@@ -44,11 +44,18 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         register =findViewById(R.id.btnRegister);
-        name =findViewById(R.id.txtFullName);
+        username =findViewById(R.id.txtUserName);
         email =findViewById(R.id.txtEmail);
         password =findViewById(R.id.txtPassword);
         login =findViewById(R.id.tvLogin);
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+        });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,9 +67,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void CreateUser() {
-        String userName = name.getText().toString();
+        String userName = username.getText().toString();
         String userEmail = email.getText().toString();
         String userPassword = password.getText().toString();
+
 
         if(TextUtils.isEmpty(userName)){
             Toast.makeText(this, "Name is Empty!", Toast.LENGTH_SHORT).show();
@@ -80,13 +88,14 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Password Length must be greater then 6 latter!", Toast.LENGTH_SHORT).show();
             return;
         }
+        int roleId = 1;
 
         auth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
 
-                    UserModel userModel = new UserModel(userName,userEmail,userPassword);
+                    UserModel userModel = new UserModel(userName,userEmail,userPassword,"","",roleId);
                     String id = task.getResult().getUser().getUid();
                     database.getReference().child("Users").child(id).setValue(userModel);
                     progressBar.setVisibility(View.GONE);

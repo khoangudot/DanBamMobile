@@ -1,25 +1,32 @@
 package com.example.danbammobile.models;
 
 public class UserModel {
-    String name;
-    String email;
-    String password;
+    private String username;
+    private String email;
+    private String password;
+    private String fullName;
+    private String address;
+    private int roleId;
+
 
     public UserModel() {
     }
 
-    public UserModel(String name, String email, String password) {
-        this.name = name;
+    public UserModel(String username, String email, String password, String fullName, String address, int roleId) {
+        this.username = username;
         this.email = email;
         this.password = password;
+        this.fullName = fullName;
+        this.address = address;
+        this.roleId = roleId;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -36,5 +43,29 @@ public class UserModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 }

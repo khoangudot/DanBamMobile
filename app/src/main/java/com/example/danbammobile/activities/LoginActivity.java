@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -69,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            onLoginSuccess(userEmail);
+
                         }
                         else{
                             Toast.makeText(LoginActivity.this,"Login failed",Toast.LENGTH_SHORT).show();
@@ -77,5 +79,22 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void onLoginSuccess(String userEmail) {
+        // Lưu email vào SharedPreferences
+        saveUserEmailToSharedPreferences(userEmail);
+
+        // Điều hướng đến màn hình chính hoặc màn hình khác sau đăng nhập thành công
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish(); // Đóng màn hình đăng nhập nếu cần thiết
+    }
+
+    private void saveUserEmailToSharedPreferences(String userEmail) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userEmail", userEmail);
+        editor.apply();
     }
 }

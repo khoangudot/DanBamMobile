@@ -31,13 +31,13 @@
         app:layout_constraintVertical_bias="0.113" />
 
     <EditText
-        android:id="@+id/txtFullName"
+        android:id="@+id/txtUserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#CCCCCC"
         android:drawableLeft="@drawable/baseline_account_circle_24"
         android:drawablePadding="13dp"
-        android:hint="Full Name"
+        android:hint="User Name"
         android:minHeight="48dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
@@ -61,7 +61,7 @@
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/txtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtFullName"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserName"
         app:layout_constraintVertical_bias="0.08"
         app:layout_constraintWidth_percent=".8" />
 
@@ -123,7 +123,7 @@
         android:fontFamily="@font/akronim"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:onClick="login"
+
         android:text="Login"
         android:textColor="@color/purple_500"
         android:textSize="16sp"

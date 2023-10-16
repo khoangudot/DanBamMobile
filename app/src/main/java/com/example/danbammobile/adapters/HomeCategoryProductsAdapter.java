@@ -1,22 +1,38 @@
 package com.example.danbammobile.adapters;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.danbammobile.R;
+import com.example.danbammobile.models.OrderDetail;
 import com.example.danbammobile.models.ProductModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCategoryProductsAdapter.ViewHolder> {
+
+    private BottomSheetDialog bottomSheetDialog;
     Context context;
     List<ProductModel> productModels;
 
@@ -32,7 +48,15 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        final String fProductName = productModels.get(position).getProductName();
+        final String fProductDescription = productModels.get(position).getProductDescription();
+        final String fProductImage = productModels.get(position).getProductImage();
+        final float fProductRating = productModels.get(position).getProductRating();
+        final int fProductPrice = productModels.get(position).getProductPrice();
+        final int fProductDiscount = productModels.get(position).getProductDiscount();
+
         Glide.with(context).load(productModels.get(position).getProductImage()).into(holder.productImage);
         holder.productName.setText(productModels.get(position).getProductName());
         holder.productDescription.setText(productModels.get(position).getProductDescription());
@@ -40,6 +64,108 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
         holder.productPrice.setText("Price "+ String.format("%,d", productModels.get(position).getProductPrice()));
         holder.productDiscount.setText("Discount "+ productModels.get(position).getProductDiscount()+ "%");
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            int totalQuantity = 1;
+            int totalPrice = productModels.get(position).getProductPrice() ;
+
+            @Override
+            public void onClick(View view) {
+
+
+                bottomSheetDialog = new BottomSheetDialog(context,R.style.BottomSheetTheme);
+
+                View sheetView = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_layout,null);
+
+                Button addToCartBtn = sheetView.findViewById(R.id.bottom_sheet_addToCart_btn);
+                ImageView bottomProductImg = sheetView.findViewById(R.id.bottom_sheet_img);
+                TextView bottomProductName = sheetView.findViewById(R.id.bottom_sheet_product_name);
+                TextView bottomProductDescription = sheetView.findViewById(R.id.bottom_sheet_product_description);
+                TextView bottomProductRating = sheetView.findViewById(R.id.bottom_sheet_product_rating);
+                TextView bottomProductPrice = sheetView.findViewById(R.id.bottom_sheet_product_price);
+                TextView bottomProductDiscount = sheetView.findViewById(R.id.bottom_sheet_discount);
+                ImageView addItemImage = sheetView.findViewById(R.id.bottom_sheet_addItem);
+                ImageView removeItemImage = sheetView.findViewById(R.id.bottom_sheet_removeItem);
+                TextView quantity = sheetView.findViewById(R.id.bottom_sheet_quantity);
+
+
+
+                addItemImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        totalQuantity ++;
+                        quantity.setText(String.valueOf(totalQuantity));
+                        totalPrice = productModels.get(position).getProductPrice() * totalQuantity;
+                    }
+                });
+                removeItemImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(totalQuantity > 0 ) {
+                            totalQuantity --;
+                            quantity.setText(String.valueOf(totalQuantity));
+                            totalPrice = productModels.get(position).getProductPrice() * totalQuantity;
+                        }
+                    }
+                });
+                addToCartBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // Lấy email từ SharedPreferences
+                        String userEmail = getUserEmailFromSharedPreferences();
+                        OrderDetail(userEmail, productModels.get(position).getProductId(), totalQuantity, totalPrice);
+                        Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
+                        bottomSheetDialog.dismiss();
+
+                    }
+                });
+
+                //Load to Bottom Dialog
+                Glide.with(context).load(fProductImage).into(bottomProductImg);
+                bottomProductName.setText(fProductName);
+                bottomProductDescription.setText(fProductDescription);
+                bottomProductRating.setText(String.format("%.1f", fProductRating));
+                bottomProductPrice.setText("Price "+ String.format("%,d", fProductPrice));
+                bottomProductDiscount.setText("Discount "+ fProductDiscount  +"%");
+                bottomSheetDialog.setContentView(sheetView);
+                bottomSheetDialog.show();
+            }
+        });
+    }
+
+    private String getUserEmailFromSharedPreferences() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        return sharedPreferences.getString("userEmail", ""); // Trả về email lưu trong SharedPreferences
+    }
+
+
+
+    private void OrderDetail(String userEmail, int productId, int quantity, int totalPrice) {
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference orderDetailRef = db.collection("OrderDetail").document(); // Tạo một tài liệu mới
+
+        // Tạo một đối tượng OrderDetail
+        OrderDetail orderDetail = new OrderDetail(userEmail, productId, quantity, totalPrice);
+
+        // Thêm đối tượng vào Firestore
+        orderDetailRef.set(orderDetail)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Đã thêm đơn hàng thành công
+                        Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Xảy ra lỗi khi thêm đơn hàng
+                        Toast.makeText(context, "Failed to add to Cart", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
