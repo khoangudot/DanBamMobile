@@ -3,6 +3,7 @@ package com.example.danbammobile.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.danbammobile.R;
 import com.example.danbammobile.models.CartModel;
@@ -20,8 +21,7 @@ public class PlacedOrderActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         ArrayList<CartModel> cartModels = (ArrayList<CartModel>) getIntent().getSerializableExtra("itemList");
-        if(cartModels != null && cartModels.size()>0){
 
-        }
+
     }
 }

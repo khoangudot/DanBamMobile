@@ -143,7 +143,7 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference orderDetailRef = db.collection("OrderDetail").document(); // Tạo một tài liệu mới
+        DocumentReference orderDetailRef = db.collection("AddToCart").document(); // Tạo một tài liệu mới
 
         // Tạo một đối tượng OrderDetail
         CartModel cartModel = new CartModel(userEmail, productId, quantity, totalPrice);

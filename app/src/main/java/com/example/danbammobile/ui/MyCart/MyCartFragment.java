@@ -66,7 +66,7 @@ public class MyCartFragment extends Fragment {
         context=getActivity();
         String userEmail = getUserEmailFromSharedPreferences();
         //Log.d("MyCartAdapter", "ItemCount: " + userEmail);
-        db.collection("OrderDetail")
+        db.collection("AddToCart")
                 .whereEqualTo("userEmail",userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -74,7 +74,13 @@ public class MyCartFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                String documentId = document.getId();
+
                                 CartModel cartModel = document.toObject(CartModel.class);
+
+                                cartModel.setDocumentId(documentId);
+
                                 cartModels.add(cartModel);
 
                             }

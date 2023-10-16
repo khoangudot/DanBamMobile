@@ -1,12 +1,14 @@
 package com.example.danbammobile.models;
 
-public class CartModel {
+import java.io.Serializable;
+
+public class CartModel implements Serializable {
 
     private String UserEmail;
     private int ProductId;
     private int Quantity;
     private int TotalPrice;
-
+     private String DocumentId;
 
 
     public CartModel() {
@@ -21,6 +23,14 @@ public class CartModel {
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        this.OrderDate = dateFormat.format(calendar.getTime());
 
+    }
+
+    public String getDocumentId() {
+        return DocumentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        DocumentId = documentId;
     }
 
     public String getUserEmail() {
