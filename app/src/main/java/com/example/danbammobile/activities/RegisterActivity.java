@@ -19,8 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.ktx.Firebase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterActivity extends AppCompatActivity {
     Button register;
@@ -29,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     ProgressBar progressBar ;
     FirebaseAuth auth;
-    FirebaseDatabase database;
+    FirebaseFirestore firestore;
 
 
     @Override
@@ -38,8 +37,9 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
 
+
+        firestore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
 
@@ -90,21 +90,31 @@ public class RegisterActivity extends AppCompatActivity {
         }
         int roleId = 1;
 
-        auth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
+                    UserModel userModel = new UserModel(userName, userEmail, userPassword, "", "",roleId);
+                    String userId = task.getResult().getUser().getUid();
 
-                    UserModel userModel = new UserModel(userName,userEmail,userPassword,"","",roleId);
-                    String id = task.getResult().getUser().getUid();
-                    database.getReference().child("Users").child(id).setValue(userModel);
-                    progressBar.setVisibility(View.GONE);
+                    firestore.collection("users")
+                            .document(userId)
+                            .set(userModel)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> firestoreTask) {
+                                    progressBar.setVisibility(View.GONE);
+                                    if (firestoreTask.isSuccessful()) {
+                                        Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(RegisterActivity.this, "Error: " + firestoreTask.getException(), Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(RegisterActivity.this, "Registration Successful",Toast.LENGTH_SHORT).show();
-                }
-                else{
+                                    }
+                                }
+                            });
+                } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(RegisterActivity.this, "Error: "+ task.getException(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

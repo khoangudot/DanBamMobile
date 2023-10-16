@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -59,24 +61,26 @@ public class LoginActivity extends AppCompatActivity {
 
         if(TextUtils.isEmpty(userEmail)){
             Toast.makeText(this,"Email is Empty!", Toast.LENGTH_SHORT).show();
+            return;
         }
         if(TextUtils.isEmpty(userPassword)){
             Toast.makeText(this,"Password is Empty!", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        firebaseAuth.signInWithEmailAndPassword(userEmail,userPassword)
+        // Sử dụng Firebase Authentication để đăng nhập
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+
+                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                             onLoginSuccess(userEmail);
-
+                        } else {
+                            // Đăng nhập thất bại
+                            Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
                         }
-                        else{
-                            Toast.makeText(LoginActivity.this,"Login failed",Toast.LENGTH_SHORT).show();
-                        }
-
                     }
                 });
     }
