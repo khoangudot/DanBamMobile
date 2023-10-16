@@ -11,6 +11,6 @@ public class testActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bottom_sheet_layout);
+        setContentView(R.layout.fragment_my_cart);
     }
 }

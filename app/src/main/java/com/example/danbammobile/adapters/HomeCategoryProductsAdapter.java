@@ -18,13 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.danbammobile.R;
-import com.example.danbammobile.models.OrderDetail;
+import com.example.danbammobile.models.CartModel;
 import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -114,7 +112,7 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
                     public void onClick(View view) {
                         // Lấy email từ SharedPreferences
                         String userEmail = getUserEmailFromSharedPreferences();
-                        OrderDetail(userEmail, productModels.get(position).getProductId(), totalQuantity, totalPrice);
+                        AddedToCart(userEmail, productModels.get(position).getProductId(), totalQuantity, totalPrice);
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
 
@@ -141,17 +139,17 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
 
 
 
-    private void OrderDetail(String userEmail, int productId, int quantity, int totalPrice) {
+    private void AddedToCart(String userEmail, int productId, int quantity, int totalPrice) {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference orderDetailRef = db.collection("OrderDetail").document(); // Tạo một tài liệu mới
 
         // Tạo một đối tượng OrderDetail
-        OrderDetail orderDetail = new OrderDetail(userEmail, productId, quantity, totalPrice);
+        CartModel cartModel = new CartModel(userEmail, productId, quantity, totalPrice);
 
         // Thêm đối tượng vào Firestore
-        orderDetailRef.set(orderDetail)
+        orderDetailRef.set(cartModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
