@@ -16,15 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.danbammobile.R;
 import com.example.danbammobile.adapters.HomeCategoryAdapter;
-import com.example.danbammobile.adapters.HomeHotComboAdapter;
+import com.example.danbammobile.adapters.HomeHighestRatingAdapter;
 import com.example.danbammobile.adapters.HomeCategoryProductsAdapter;
 import com.example.danbammobile.interfaces.HomeLoadProducts;
 import com.example.danbammobile.models.CategoryModel;
-import com.example.danbammobile.models.HotComboModel;
 import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,12 +36,12 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
 
     ScrollView scrollView;
     ProgressBar progressBar;
-    RecyclerView homeHotComboRecyclerView, homeCategoryRecyclerView,homeMenuRecyclerView;
+    RecyclerView homeHighestRatingRecyclerView, homeCategoryRecyclerView,homeMenuRecyclerView;
     FirebaseFirestore db;
 
-    // Home Hot combo
-    List<HotComboModel> hotComboModelList;
-    HomeHotComboAdapter homeHotComboAdapter;
+    // Home Highest Rating
+    ArrayList<ProductModel> homeHighestRatingList;
+    HomeHighestRatingAdapter homeHighestRatingAdapter;
 
     //Home Category
     ArrayList<CategoryModel> categoryModelList;
@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
         View root = inflater.inflate(R.layout.fragment_home,container,false);
 
         db = FirebaseFirestore.getInstance();
-        homeHotComboRecyclerView = root.findViewById(R.id.rec_home_hot_combo);
+        homeHighestRatingRecyclerView = root.findViewById(R.id.rec_home_highest_rating);
         homeCategoryRecyclerView = root.findViewById(R.id.rec_home_category);
         homeMenuRecyclerView = root.findViewById(R.id.rec_home_menu);
         scrollView = root.findViewById(R.id.home_scroll_view);
@@ -68,31 +68,34 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
         progressBar.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.GONE);
 
-        // Home Hot Combo
-        homeHotComboRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
-        hotComboModelList = new ArrayList<>();
-        homeHotComboAdapter = new HomeHotComboAdapter(getActivity(), hotComboModelList);
-        homeHotComboRecyclerView.setAdapter(homeHotComboAdapter);
+        // Highest Rating
+        homeHighestRatingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        homeHighestRatingList = new ArrayList<>();
+        homeHighestRatingAdapter = new HomeHighestRatingAdapter(getActivity(), homeHighestRatingList);
+        homeHighestRatingRecyclerView.setAdapter(homeHighestRatingAdapter);
 
-        db.collection("PopularProducts")
+        db.collection("Product")
+                .orderBy("ProductRating", Query.Direction.DESCENDING) // Sắp xếp theo rating giảm dần
+                .limit(10) // Giới hạn kết quả trả về 10 sản phẩm
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            homeHighestRatingList.clear(); // Xóa danh sách cũ
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                HotComboModel hotComboModel = document.toObject(HotComboModel.class);
-                                hotComboModelList.add(hotComboModel);
-                                homeHotComboAdapter.notifyDataSetChanged();
-                                progressBar.setVisibility(View.GONE);
-                                scrollView.setVisibility(View.VISIBLE);
+                                ProductModel productModel = document.toObject(ProductModel.class);
+                                homeHighestRatingList.add(productModel);
                             }
+                            homeHighestRatingAdapter.notifyDataSetChanged(); // Cập nhật RecyclerView
+                            progressBar.setVisibility(View.GONE);
+                            scrollView.setVisibility(View.VISIBLE);
                         } else {
-                            Toast.makeText(getActivity(),"Err"+task.getException(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
 
         // Home category
         homeCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));

@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/amita"
-                    android:text="Hot Combo "
+                    android:text="Highest Rating "
                     android:textSize="18sp"
                     android:textStyle="bold|italic"
                     android:textColor="@color/white"
@@ -80,7 +80,7 @@
 
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rec_home_hot_combo"
+                android:id="@+id/rec_home_highest_rating"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"

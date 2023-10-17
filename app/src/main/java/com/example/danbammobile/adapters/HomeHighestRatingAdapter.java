@@ -26,42 +26,40 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCategoryProductsAdapter.ViewHolder> {
-
+public class HomeHighestRatingAdapter extends RecyclerView.Adapter<HomeHighestRatingAdapter.ViewHolder> {
     private BottomSheetDialog bottomSheetDialog;
-    Context context;
-    List<ProductModel> productModels;
 
+    private Context context;
+    private ArrayList<ProductModel> highestRatingList;
 
-    public HomeCategoryProductsAdapter(Context context, List<ProductModel> productModels) {
+    public HomeHighestRatingAdapter(Context context, ArrayList<ProductModel> highestRatingList) {
         this.context = context;
-        this.productModels = productModels;
+        this.highestRatingList = highestRatingList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_category_product_item,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.home_hot_combo_items, parent, false)) ;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        final String fProductName = productModels.get(position).getProductName();
-        final String fProductDescription = productModels.get(position).getProductDescription();
-        final String fProductImage = productModels.get(position).getProductImage();
-        final float fProductRating = productModels.get(position).getProductRating();
-        final int fProductPrice = productModels.get(position).getProductPrice();
-        final int fProductDiscount = productModels.get(position).getProductDiscount();
+        final String fProductName = highestRatingList.get(position).getProductName();
+        final String fProductDescription = highestRatingList.get(position).getProductDescription();
+        final String fProductImage = highestRatingList.get(position).getProductImage();
+        final float fProductRating = highestRatingList.get(position).getProductRating();
+        final int fProductPrice = highestRatingList.get(position).getProductPrice();
+        final int fProductDiscount = highestRatingList.get(position).getProductDiscount();
 
-        Glide.with(context).load(productModels.get(position).getProductImage()).into(holder.productImage);
-        holder.productName.setText(productModels.get(position).getProductName());
-        holder.productDescription.setText(productModels.get(position).getProductDescription());
-        holder.productRating.setText(String.format("%.1f", productModels.get(position).getProductRating()));
-        holder.productPrice.setText("Price "+ String.format("%,d", productModels.get(position).getProductPrice()));
-        holder.productDiscount.setText("Discount "+ productModels.get(position).getProductDiscount()+ "%");
+        holder.highestRatingName.setText(highestRatingList.get(position).getProductName());
+        Glide.with(context).load(highestRatingList.get(position).getProductImage()).into(holder.highestRatingImage);
+        holder.highestRatingRating.setText(String.format("%.1f", highestRatingList.get(position).getProductRating()));
+        holder.highestRatingPrice.setText("Price "+ String.format("%,d", highestRatingList.get(position).getProductPrice()));
+        holder.highestRatingDiscount.setText("Discount "+ highestRatingList.get(position).getProductDiscount()+ "%");
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +117,7 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
                         }
                         // Lấy email từ SharedPreferences
                         String userEmail = getUserEmailFromSharedPreferences();
-                        AddedToCart(userEmail, productModels.get(position).getProductId(), totalQuantity, (int) totalPrice);
+                        AddedToCart(userEmail, highestRatingList.get(position).getProductId(), totalQuantity, (int) totalPrice);
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
 
@@ -173,23 +171,26 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
                 });
     }
 
+
+
     @Override
     public int getItemCount() {
-        return productModels.size();
+        return highestRatingList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView productImage;
-        TextView productName, productDescription, productRating,productPrice, productDiscount;
-
+        ImageView highestRatingImage;
+        TextView highestRatingName, highestRatingDescription, highestRatingRating, highestRatingPrice, highestRatingDiscount;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            productName = itemView.findViewById(R.id.home_category_product_item_name);
-            productDescription = itemView.findViewById(R.id.home_category_product_item_description);
-            productImage = itemView.findViewById(R.id.home_category_product_item_img);
-            productRating = itemView.findViewById(R.id.home_category_product_item_rating);
-            productPrice = itemView.findViewById(R.id.home_category_product_item_price);
-            productDiscount = itemView.findViewById(R.id.home_category_product_item_discount);
+            highestRatingName = itemView.findViewById(R.id.home_hot_combo_item_name);
+            highestRatingImage = itemView.findViewById(R.id.home_hot_combo_item_img);
+
+            highestRatingDescription = itemView.findViewById(R.id.home_hot_combo_item_description);
+            highestRatingRating = itemView.findViewById(R.id.home_hot_combo_item_rating);
+            highestRatingPrice = itemView.findViewById(R.id.home_hot_combo_item_price);
+            highestRatingDiscount = itemView.findViewById(R.id.home_hot_combo_item_discount);
+
         }
     }
 }
