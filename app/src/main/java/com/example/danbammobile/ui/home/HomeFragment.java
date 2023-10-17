@@ -1,9 +1,14 @@
 package com.example.danbammobile.ui.home;
 
+
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -16,13 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.danbammobile.R;
 import com.example.danbammobile.adapters.HomeCategoryAdapter;
-import com.example.danbammobile.adapters.HomeHighestRatingAdapter;
 import com.example.danbammobile.adapters.HomeCategoryProductsAdapter;
+import com.example.danbammobile.adapters.HomeHighestRatingAdapter;
 import com.example.danbammobile.interfaces.HomeLoadProducts;
 import com.example.danbammobile.models.CategoryModel;
 import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,7 +36,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class HomeFragment extends Fragment implements HomeLoadProducts {
 
@@ -38,6 +46,15 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
     ProgressBar progressBar;
     RecyclerView homeHighestRatingRecyclerView, homeCategoryRecyclerView,homeMenuRecyclerView;
     FirebaseFirestore db;
+
+
+
+    ///////Search View
+    EditText searchBox;
+    private ArrayList<ProductModel> searchProductsList;
+    RecyclerView searchRecycler;
+
+
 
     // Home Highest Rating
     ArrayList<ProductModel> homeHighestRatingList;
@@ -123,11 +140,76 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
                     }
                 });
 
-       
+       ////Search Product
+        searchRecycler = root.findViewById(R.id.home_search_rec);
+        searchBox = root.findViewById(R.id.home_search_box);
+        searchProductsList = new ArrayList<>();
+        homeHighestRatingAdapter= new HomeHighestRatingAdapter(getContext(),searchProductsList);
+        searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        searchRecycler.setAdapter(homeHighestRatingAdapter);
+        searchRecycler.setHasFixedSize(true);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
 
+            }
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (editable.toString().isEmpty()) {
+
+                    searchProductsList.clear();
+                    homeHighestRatingAdapter.notifyDataSetChanged();
+                }else {
+                    searchProduct(editable.toString());
+
+                }
+            }
+        });
         return root;
     }
+
+    private void searchProduct(String searchQuery) {
+        if (!searchQuery.isEmpty()) {
+            // Loại bỏ dấu tiếng Việt và chuyển thành chữ thường
+            String searchQueryNormalized = removeVietnameseAccents(searchQuery);
+
+            // Sắp xếp kết quả tìm kiếm theo tên sản phẩm đã được chuẩn hóa
+            Query query = db.collection("Product")
+                    .orderBy("ProductName")
+                    .startAt(searchQueryNormalized)
+                    .endAt(searchQueryNormalized + "\uf8ff");
+
+            // Thực hiện tìm kiếm
+            query.get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                searchProductsList.clear();
+                                homeHighestRatingAdapter.notifyDataSetChanged();
+                                for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                    ProductModel productModel = document.toObject(ProductModel.class);
+                                    searchProductsList.add(productModel);
+                                }
+                                //Log.d("TAG", "Error searching for products111111: "+ searchQueryNormalized);
+                                //Log.d("TAG", "Error searching for products222: "+ searchProductsList.size());
+                            } else {
+                                Log.d("TAG", "Error searching for products: ", task.getException());
+                            }
+                        }
+                    });
+        }
+    }
+
+
+
+
 
     @Override
     public void CallBack(int position, ArrayList<ProductModel> productModels) {
@@ -135,5 +217,11 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
         homeCategoryProductsAdapter =  new HomeCategoryProductsAdapter(getContext(),productModels);
         homeCategoryProductsAdapter.notifyDataSetChanged();
         homeMenuRecyclerView.setAdapter(homeCategoryProductsAdapter);
+    }
+
+    public  String removeVietnameseAccents(String str) {
+        Pattern pattern = Pattern.compile("[\\u0300-\\u036F]");
+        Matcher matcher = pattern.matcher(str);
+        return matcher.replaceAll("");
     }
 }

@@ -72,7 +72,35 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/white"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="2">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Product Discount"
+                android:textSize="16sp"
+                android:fontFamily="@font/amita"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:id="@+id/my_cart_item_productDiscount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ProductDiscount"
+                android:textSize="16sp"
+                android:fontFamily="@font/amita"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

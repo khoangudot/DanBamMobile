@@ -32,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -104,7 +105,7 @@ public class MyCartFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), PlacedOrderActivity.class);
-                intent.putExtra("itemList", cartModels);
+                intent.putExtra("itemList",(Serializable)cartModels);
                 startActivity(intent);
             }
         });

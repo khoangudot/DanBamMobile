@@ -61,7 +61,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
                         if (product != null) {
                             holder.productName.setText(product.getProductName());
                             holder.productPrice.setText(String.format("%,d", product.getProductPrice()));
-
+                            holder.productDiscount.setText(String.valueOf(cartModels.get(position).getProductDiscount())+ "%");
                         }
                     } else {
                         // Không tìm thấy sản phẩm với productId tương ứng
@@ -73,6 +73,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
 
        holder.quantity.setText(String.valueOf(cartModels.get(position).getQuantity()));
        holder.totalPrice.setText(String.format("%,d", cartModels.get(position).getTotalPrice()));
+
         //Delete Item
         holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +136,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView productName,productPrice, orderDate, quantity, totalPrice;
+        TextView productName,productPrice, productDiscount, quantity, totalPrice;
         ImageView deleteItem;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -145,6 +146,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
             quantity = itemView.findViewById(R.id.my_cart_item_quantity);
             totalPrice = itemView.findViewById(R.id.my_cart_item_totalPrice);
             deleteItem = itemView.findViewById(R.id.my_cart_item_delete);
+            productDiscount = itemView.findViewById(R.id.my_cart_item_productDiscount);
         }
     }
 }
