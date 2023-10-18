@@ -19,6 +19,7 @@ import com.example.danbammobile.models.CartModel;
 import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     Context context;
     ArrayList<CartModel> cartModels;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    FirebaseAuth auth  = FirebaseAuth.getInstance();
 
 
 

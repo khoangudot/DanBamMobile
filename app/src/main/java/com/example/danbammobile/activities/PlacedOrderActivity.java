@@ -16,12 +16,12 @@ import com.example.danbammobile.MainActivity;
 import com.example.danbammobile.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,16 +62,18 @@ public class PlacedOrderActivity extends AppCompatActivity {
                     // Lấy email đang đăng nhập
                     String userEmail = auth.getCurrentUser().getEmail();
 
-                    // Lấy thời gian order
-                    Timestamp orderDate = new Timestamp(new Date());
+
+                    Calendar calendar = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String OrderDate = dateFormat.format(calendar.getTime());
 
                     // Tạo một Map để lưu thông tin đơn hàng
                     Map<String, Object> orderData = new HashMap<>();
                     orderData.put("Email", userEmail);
                     orderData.put("Phone", str_phone);
                     orderData.put("Address", str_address);
-                    orderData.put("OrderDate", orderDate);
-                    orderData.put("Total Price", String.format("%,d",bill) + "VNĐ");
+                    orderData.put("OrderDate", OrderDate);
+                    orderData.put("TotalPrice", bill);
                     // Thêm thông tin đơn hàng vào Firestore
                     db.collection("Orders")
                             .add(orderData)
