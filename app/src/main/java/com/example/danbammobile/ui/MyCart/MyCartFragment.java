@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -62,9 +64,7 @@ public class MyCartFragment extends Fragment {
         myCartAdapter =  new MyCartAdapter(getActivity(), cartModels);
         recyclerView.setAdapter(myCartAdapter);
 
-        // Lấy email từ SharedPreferences
-        context=getActivity();
-        String userEmail = getUserEmailFromSharedPreferences();
+        String userEmail = auth.getCurrentUser().getEmail();
         //Log.d("MyCartAdapter", "ItemCount: " + userEmail);
         db.collection("AddToCart")
                 .whereEqualTo("userEmail",userEmail)
@@ -84,8 +84,26 @@ public class MyCartFragment extends Fragment {
                                 cartModels.add(cartModel);
 
                             }
-                            myCartAdapter.notifyDataSetChanged();
-                            //Log.d("MyCartAdapter", "ItemCount: " + orderDetails.size());
+
+                            if (cartModels == null || cartModels.isEmpty()) {
+
+                                ConstraintLayout constraintLayout2 = root.findViewById(R.id.ConstraintLayout2);
+                                constraintLayout2.setVisibility(View.GONE);
+
+                                ConstraintLayout constraintLayout1 = root.findViewById(R.id.ConstraintLayout1);
+                                constraintLayout1.setVisibility(View.VISIBLE);
+                            } else {
+
+                                ConstraintLayout constraintLayout2 = root.findViewById(R.id.ConstraintLayout2);
+                                constraintLayout2.setVisibility(View.VISIBLE);
+
+                                ConstraintLayout constraintLayout1 = root.findViewById(R.id.ConstraintLayout1);
+                                constraintLayout1.setVisibility(View.GONE);
+
+
+                                myCartAdapter.notifyDataSetChanged();
+                            }
+
                         }
 
                         else {
@@ -105,6 +123,7 @@ public class MyCartFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), PlacedOrderActivity.class);
                 intent.putExtra("totalBill", totalBill);
+                intent.putExtra("listCarts",  (Serializable) cartModels);
 
 
                 startActivity(intent);

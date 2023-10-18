@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
 public class CartModel implements Serializable {
 
     private String UserEmail;
@@ -84,6 +85,7 @@ public class CartModel implements Serializable {
     public void setTotalPrice(int totalPrice) {
         TotalPrice = totalPrice;
     }
+
 
 
 }

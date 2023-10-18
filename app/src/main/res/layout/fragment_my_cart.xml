@@ -61,7 +61,7 @@
 
                 android:fontFamily="@font/amita"
                 android:gravity="center"
-                android:text="Total Price: 1000.000"
+                android:text="Total Price: 0"
                 android:textColor="@color/purple_700"
                 android:textSize="26sp"
                 android:textStyle="bold"

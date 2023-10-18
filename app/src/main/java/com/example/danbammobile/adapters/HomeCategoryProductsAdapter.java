@@ -1,10 +1,7 @@
 package com.example.danbammobile.adapters;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +20,7 @@ import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,6 +28,7 @@ import java.util.List;
 
 public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCategoryProductsAdapter.ViewHolder> {
 
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     private BottomSheetDialog bottomSheetDialog;
     Context context;
     List<ProductModel> productModels;
@@ -118,7 +117,7 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
                             totalPrice = (fProductPrice - (fProductPrice * fProductDiscount / 100)) * totalQuantity; // Tính giá tổng sau giảm giá
                         }
                         // Lấy email từ SharedPreferences
-                        String userEmail = getUserEmailFromSharedPreferences();
+                        String userEmail = auth.getCurrentUser().getEmail();
                         AddedToCart(userEmail, productModels.get(position).getProductId(), totalQuantity, (int) totalPrice, productModels.get(position).getProductDiscount());
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
@@ -138,12 +137,6 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
             }
         });
     }
-
-    private String getUserEmailFromSharedPreferences() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return sharedPreferences.getString("userEmail", ""); // Trả về email lưu trong SharedPreferences
-    }
-
 
 
     private void AddedToCart(String userEmail, int productId, int quantity, int totalPrice, int productDiscount) {
