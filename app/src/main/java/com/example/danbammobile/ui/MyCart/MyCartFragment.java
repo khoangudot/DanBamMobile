@@ -8,18 +8,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.danbammobile.R;
 import com.example.danbammobile.activities.PlacedOrderActivity;
@@ -32,11 +31,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class MyCartFragment extends Fragment {
+    private int totalBill;
      Context context ;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -105,7 +104,9 @@ public class MyCartFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), PlacedOrderActivity.class);
-                intent.putExtra("itemList",(Serializable)cartModels);
+                intent.putExtra("totalBill", totalBill);
+
+
                 startActivity(intent);
             }
         });
@@ -117,10 +118,11 @@ public class MyCartFragment extends Fragment {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         return sharedPreferences.getString("userEmail", ""); // Trả về email lưu trong SharedPreferences
     }
+
     public BroadcastReceiver mMessageReceiver =  new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int totalBill = intent.getIntExtra("totalAmount",0);
+             totalBill = intent.getIntExtra("totalAmount",0);
             totalAmount.setText("Total Bill: "+String.format("%,d", totalBill)+" VNĐ");
         }
     };
