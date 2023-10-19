@@ -1,20 +1,22 @@
 package com.example.danbammobile;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.danbammobile.activities.LoginActivity;
 import com.example.danbammobile.databinding.ActivityMainBinding;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        TextView logOut =  findViewById(R.id.btn_logOut);
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent =  new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

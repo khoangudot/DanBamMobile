@@ -61,6 +61,7 @@
         android:textColorHint="@color/white"
         android:minHeight="48dp"
         android:hint="Phone"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/baseline_fmd_good_24"
                 android:drawablePadding="13dp"
-
+                android:textColor="@color/white"
                 >
 
             </com.google.android.material.textfield.TextInputEditText>

@@ -1,13 +1,13 @@
 package com.example.danbammobile.activities;
 
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.danbammobile.R;
@@ -15,6 +15,7 @@ import com.example.danbammobile.adapters.NavMenuItemAdapter;
 import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,8 +26,10 @@ import java.util.List;
 public class NavMenuProductActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ImageView categoryImageView;
+    FloatingActionButton btnMyCart;
     List<ProductModel> productModels;
     NavMenuItemAdapter adapter;
+
     FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class NavMenuProductActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+
         }
     }
 }

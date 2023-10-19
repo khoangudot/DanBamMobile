@@ -26,7 +26,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NavMenuItemAdapter extends RecyclerView.Adapter<NavMenuItemAdapter.ViewHolder> {
@@ -137,6 +136,7 @@ public class NavMenuItemAdapter extends RecyclerView.Adapter<NavMenuItemAdapter.
             }
         });
     }
+
 
     private String getUserEmailFromSharedPreferences() {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
