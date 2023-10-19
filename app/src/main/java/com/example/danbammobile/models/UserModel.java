@@ -6,19 +6,29 @@ public class UserModel {
     private String password;
     private String fullName;
     private String address;
+    private String Phone;
     private int roleId;
 
 
     public UserModel() {
     }
 
-    public UserModel(String username, String email, String password, String fullName, String address, int roleId) {
+    public UserModel(String username, String email, String password, String fullName, String address, String phone, int roleId) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.address = address;
+        Phone = phone;
         this.roleId = roleId;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 
     public String getUsername() {

@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    UserModel userModel = new UserModel(userName, userEmail, userPassword, "", "",roleId);
+                    UserModel userModel = new UserModel(userName, userEmail, userPassword, "", "","",roleId);
                     String userId = task.getResult().getUser().getUid();
 
                     firestore.collection("users")

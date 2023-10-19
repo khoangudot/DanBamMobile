@@ -37,24 +37,25 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_profile,R.id.nav_restaurant_menu,R.id.nav_my_order,R.id.nav_my_cart)
-        .setOpenableLayout(drawer)
-        .build();
+                R.id.nav_home, R.id.nav_profile, R.id.nav_restaurant_menu, R.id.nav_my_order, R.id.nav_my_cart)
+                .setOpenableLayout(drawer)
+                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        TextView logOut =  findViewById(R.id.btn_logOut);
+        TextView logOut = findViewById(R.id.btn_logOut);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent =  new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
-    }
 
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

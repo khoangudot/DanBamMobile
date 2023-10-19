@@ -1,21 +1,24 @@
 package com.example.danbammobile.ui.Profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.danbammobile.R;
+import com.example.danbammobile.activities.UpdateUserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class ProfileFragment extends Fragment {
     private TextView fullNameTextView, emailTextView, phoneTextView, addressTextView;
-
+    Button updateProfile;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -52,6 +55,14 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
+        updateProfile = view.findViewById(R.id.user_profile_btnUpdate);
+        updateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getActivity(), UpdateUserProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

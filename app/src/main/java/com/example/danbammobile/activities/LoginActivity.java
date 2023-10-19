@@ -1,8 +1,5 @@
 package com.example.danbammobile.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,14 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.danbammobile.MainActivity;
 import com.example.danbammobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -86,13 +84,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginSuccess(String userEmail) {
-        // Lưu email vào SharedPreferences
-        saveUserEmailToSharedPreferences(userEmail);
 
-        // Điều hướng đến màn hình chính hoặc màn hình khác sau đăng nhập thành công
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
-        finish(); // Đóng màn hình đăng nhập nếu cần thiết
+        finish();
     }
 
     private void saveUserEmailToSharedPreferences(String userEmail) {
