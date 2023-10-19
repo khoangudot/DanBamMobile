@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Profile.ProfileFragment">
+    tools:context=".ui.Profile.ProfileFragment"
+
+    >
 
 
     <ImageView
-        android:id="@+id/img_profile"
+        android:id="@+id/user_profile_img"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="15dp"
@@ -16,4 +18,88 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/user_profile_fullName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#CD724D"
+        android:drawableLeft="@drawable/baseline_person_24"
+        android:drawablePadding="13dp"
+        android:fontFamily="@font/amita"
+        android:text="FullName: Nguyen Viet Khoa"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_img"
+        app:layout_constraintWidth_percent=".9"
+        tools:layout_editor_absoluteY="235dp" />
+
+    <TextView
+        android:id="@+id/user_profile_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#CD724D"
+        android:drawableLeft="@drawable/baseline_email_24"
+        android:drawablePadding="13dp"
+        android:fontFamily="@font/amita"
+        android:text="Email: khoanvhe153692@fpt.edu.vn"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_fullName"
+        app:layout_constraintWidth_percent=".9" />
+
+    <TextView
+        android:id="@+id/user_profile_phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#CD724D"
+        android:drawableLeft="@drawable/baseline_phone_24"
+        android:drawablePadding="13dp"
+        android:fontFamily="@font/amita"
+        android:text="Phone: 0986289866"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_email"
+        app:layout_constraintWidth_percent=".9" />
+
+    <TextView
+        android:id="@+id/user_profile_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#CD724D"
+        android:drawableLeft="@drawable/baseline_fmd_good_24"
+        android:drawablePadding="13dp"
+        android:fontFamily="@font/amita"
+        android:text="Address: Nghe An"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/user_profile_phone"
+        app:layout_constraintWidth_percent=".9" />
+        <Button
+            android:id="@+id/user_profile_btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_profile_address"
+            android:backgroundTint="#4BD351"
+            android:layout_marginTop="30dp"
+            android:text="Update Profile"
+            android:textAllCaps="false"
+            android:fontFamily="@font/amita"
+
+            />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

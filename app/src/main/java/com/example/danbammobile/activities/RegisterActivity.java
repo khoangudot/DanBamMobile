@@ -1,8 +1,5 @@
 package com.example.danbammobile.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,6 +9,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.danbammobile.R;
 import com.example.danbammobile.models.UserModel;
@@ -106,6 +106,9 @@ public class RegisterActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     if (firestoreTask.isSuccessful()) {
                                         Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent =  new Intent(RegisterActivity.this, LoginActivity.class);
+                                        startActivity(intent);
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "Error: " + firestoreTask.getException(), Toast.LENGTH_SHORT).show();
 
