@@ -39,7 +39,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         holder.email.setText(orderModels.get(position).getEmail());
         holder.phone.setText(orderModels.get(position).getPhone());
         holder.address.setText(orderModels.get(position).getAddress());
-        holder.totalPrice.setText(String.valueOf(orderModels.get(position).getTotalPrice()));
+        holder.totalPrice.setText(String.format("%,d",orderModels.get(position).getTotalPrice())+" VNĐ");
         holder.orderDate.setText(orderModels.get(position).getOrderDate());
 
     }

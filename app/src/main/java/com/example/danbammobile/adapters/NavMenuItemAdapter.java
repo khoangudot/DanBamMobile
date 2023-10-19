@@ -23,6 +23,7 @@ import com.example.danbammobile.models.ProductModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -115,8 +116,8 @@ public class NavMenuItemAdapter extends RecyclerView.Adapter<NavMenuItemAdapter.
                             quantity.setText(String.valueOf(totalQuantity));
                             totalPrice = (fProductPrice - (fProductPrice * fProductDiscount / 100)) * totalQuantity; // Tính giá tổng sau giảm giá
                         }
-                        // Lấy email từ SharedPreferences
-                        String userEmail = getUserEmailFromSharedPreferences();
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        String userEmail = auth.getCurrentUser().getEmail();
                         AddedToCart(userEmail, productModels.get(position).getProductId(), totalQuantity, (int) totalPrice, productModels.get(position).getProductDiscount());
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
