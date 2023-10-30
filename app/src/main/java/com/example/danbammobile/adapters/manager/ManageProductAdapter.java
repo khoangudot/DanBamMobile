@@ -1,5 +1,6 @@
 package com.example.danbammobile.adapters.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Glide.with(context).load(productModels.get(position).getProductImage()).into(holder.productImage);
         holder.productName.setText(productModels.get(position).getProductName());
@@ -43,6 +44,17 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
         holder.productRating.setText(String.format("%.1f", productModels.get(position).getProductRating()));
         holder.productPrice.setText("Price "+ String.format("%,d", productModels.get(position).getProductPrice()));
         holder.productDiscount.setText("Discount "+ productModels.get(position).getProductDiscount()+ "%");
+
+        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProductModel selectedProduct = productModels.get(position);
+                Intent intent = new Intent(context, UpdateProductActivity.class);
+
+                intent.putExtra("product", (Serializable) selectedProduct);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -66,16 +78,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             btnUpdate = itemView.findViewById(R.id.manage_product_update);
             btnDelete = itemView.findViewById(R.id.manage_product_delete);
 
-            btnUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ProductModel selectedProduct = productModels.get(getAdapterPosition());
-                    Intent intent = new Intent(context, UpdateProductActivity.class);
 
-                    intent.putExtra("product", (Serializable) selectedProduct);
-                    context.startActivity(intent);
-                }
-            });
 
         }
     }

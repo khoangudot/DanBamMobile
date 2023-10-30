@@ -1,7 +1,9 @@
 package com.example.danbammobile.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,30 +81,46 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
         holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 db.collection("AddToCart")
-                         .document(cartModels.get(position).getDocumentId())
-                         .delete()
-                         .addOnCompleteListener(new OnCompleteListener<Void>() {
-                             @Override
-                             public void onComplete(@NonNull Task<Void> task) {
-                                 if(task.isSuccessful()){
-                                     cartModels.remove(cartModels.get(position));
-                                     // Tính toán lại totalAmount sau khi xóa mục
-                                     int updatedTotalAmount = calculateTotalAmount();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Xác nhận xóa");
+                builder.setMessage("Bạn có chắc chắn muốn xóa mục này?");
 
-                                     // Gửi updatedTotalAmount thông qua broadcast
-                                     sendTotalAmountBroadcast(updatedTotalAmount);
-                                     notifyDataSetChanged();
+                builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý xóa mục
+                        db.collection("AddToCart")
+                                .document(cartModels.get(position).getDocumentId())
+                                .delete()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            cartModels.remove(cartModels.get(position));
+                                            int updatedTotalAmount = calculateTotalAmount();
+                                            sendTotalAmountBroadcast(updatedTotalAmount);
+                                            notifyDataSetChanged();
+                                            Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(context, "Err" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                });
 
-                                     Toast.makeText(context,"Item Deleted",Toast.LENGTH_SHORT).show();
-                                 }
-                                 else {
-                                     Toast.makeText(context,"Err"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                                 }
-                             }
-                         });
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
+
 
         //pass totalAmount to My Cart Fragment
         boolean check = true;
