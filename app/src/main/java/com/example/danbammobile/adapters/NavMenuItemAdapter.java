@@ -1,10 +1,7 @@
 package com.example.danbammobile.adapters;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,13 +134,6 @@ public class NavMenuItemAdapter extends RecyclerView.Adapter<NavMenuItemAdapter.
             }
         });
     }
-
-
-    private String getUserEmailFromSharedPreferences() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return sharedPreferences.getString("userEmail", ""); // Trả về email lưu trong SharedPreferences
-    }
-
 
 
     private void AddedToCart(String userEmail, int productId, int quantity, int totalPrice, int productDiscount) {

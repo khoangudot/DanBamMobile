@@ -19,6 +19,7 @@
     <string name="rating_value">5.0</string>
     <string name="ProjectName">Welcome to DanBam</string>
     <string name="login">Login</string>
+    <string name="nav_manager">Manager</string>
 
 
 </resources>

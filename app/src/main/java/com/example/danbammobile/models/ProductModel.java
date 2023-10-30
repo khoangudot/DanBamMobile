@@ -1,6 +1,8 @@
 package com.example.danbammobile.models;
 
-public class ProductModel {
+import java.io.Serializable;
+
+public class ProductModel implements Serializable {
     private int ProductId;
     private String ProductName;
     private String ProductDescription;

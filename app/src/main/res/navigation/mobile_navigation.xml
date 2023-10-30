@@ -31,10 +31,11 @@
         android:name="com.example.danbammobile.ui.MyCart.MyCartFragment"
         android:label="@string/nav_menu_cart"
         tools:layout="@layout/fragment_my_cart" />
+
     <fragment
         android:id="@+id/nav_manager"
-        android:name="com.example.danbammobile.nav_manager"
-        android:label="fragment_nav_manager"
+        android:name="com.example.danbammobile.ui.manager.ManagerFragment"
+        android:label="Manager"
         tools:layout="@layout/fragment_nav_manager" />
 
 </navigation>

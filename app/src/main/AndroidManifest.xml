@@ -12,7 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DanBamMobile"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.manager.UpdateProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manager.CreateProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.manager.ManageProductsActivity"
+            android:exported="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.manager.ManagerFragment" />
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.UpdateUserProfileActivity"
             android:exported="false" />
@@ -33,20 +51,12 @@
             android:exported="true" />
         <activity
             android:name=".activities.WelcomeActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.DanBamMobile.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.DanBamMobile.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"
