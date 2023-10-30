@@ -27,5 +27,9 @@
             android:id="@+id/nav_my_cart"
             android:icon="@drawable/ic_my_order"
             android:title= "@string/nav_menu_cart" />
+        <item
+            android:id="@+id/nav_manager"
+            android:icon="@drawable/baseline_manage_accounts_24"
+            android:title= "Manager" />
     </group>
 </menu>
