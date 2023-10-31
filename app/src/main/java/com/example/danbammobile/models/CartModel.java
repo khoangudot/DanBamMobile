@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class CartModel implements Serializable {
 
     private String UserEmail;
-    private int ProductId;
+    private String ProductDocumentId;
     private int Quantity;
     private int TotalPrice;
      private String DocumentId;
@@ -19,9 +19,9 @@ public class CartModel implements Serializable {
     public CartModel() {
     }
 
-    public CartModel(String userEmail, int productId, int quantity, int totalPrice, int productDiscount) {
+    public CartModel(String userEmail, String productDocumentId, int quantity, int totalPrice, int productDiscount) {
         this.UserEmail = userEmail;
-        this.ProductId = productId;
+        this.ProductDocumentId = productDocumentId;
         this.Quantity = quantity;
         this.TotalPrice = totalPrice;
         this.ProductDiscount = productDiscount;
@@ -62,12 +62,12 @@ public class CartModel implements Serializable {
         UserEmail = userEmail;
     }
 
-    public int getProductId() {
-        return ProductId;
+    public String getProductDocumentId() {
+        return ProductDocumentId;
     }
 
-    public void setProductId(int productId) {
-        ProductId = productId;
+    public void setProductDocumentId(String productDocumentId) {
+        ProductDocumentId = productDocumentId;
     }
 
     public int getQuantity() {

@@ -3,7 +3,6 @@ package com.example.danbammobile.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +49,7 @@ public class PlacedOrderActivity extends AppCompatActivity {
         totalBill.setText("Total Bill: " + String.format("%,d",bill) + "VNĐ");
 
         ArrayList<CartModel> cartModels = (ArrayList<CartModel>) getIntent().getSerializableExtra("listCarts");
-        Log.d("TAG", "sdfsdfs: "+cartModels.get(0).getDocumentId());
+
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -118,7 +118,7 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
                         }
                         // Lấy email từ SharedPreferences
                         String userEmail = auth.getCurrentUser().getEmail();
-                        AddedToCart(userEmail, productModels.get(position).getProductId(), totalQuantity, (int) totalPrice, productModels.get(position).getProductDiscount());
+                        AddedToCart(userEmail, productModels.get(position).getDocumentId(), totalQuantity, (int) totalPrice, productModels.get(position).getProductDiscount());
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
 
@@ -139,14 +139,14 @@ public class HomeCategoryProductsAdapter extends RecyclerView.Adapter<HomeCatego
     }
 
 
-    private void AddedToCart(String userEmail, int productId, int quantity, int totalPrice, int productDiscount) {
+    private void AddedToCart(String userEmail, String documentId, int quantity, int totalPrice, int productDiscount) {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference orderDetailRef = db.collection("AddToCart").document(); // Tạo một tài liệu mới
 
         // Tạo một đối tượng OrderDetail
-        CartModel cartModel = new CartModel(userEmail, productId, quantity, totalPrice, productDiscount);
+        CartModel cartModel = new CartModel(userEmail, documentId, quantity, totalPrice, productDiscount);
 
         // Thêm đối tượng vào Firestore
         orderDetailRef.set(cartModel)

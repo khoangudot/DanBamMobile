@@ -118,7 +118,7 @@ public class HomeHighestRatingAdapter extends RecyclerView.Adapter<HomeHighestRa
                         }
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         String userEmail = auth.getCurrentUser().getEmail();
-                        AddedToCart(userEmail, highestRatingList.get(position).getProductId(), totalQuantity, (int) totalPrice, highestRatingList.get(position).getProductDiscount());
+                        AddedToCart(userEmail, highestRatingList.get(position).getDocumentId(), totalQuantity, (int) totalPrice, highestRatingList.get(position).getProductDiscount());
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
 
@@ -145,14 +145,14 @@ public class HomeHighestRatingAdapter extends RecyclerView.Adapter<HomeHighestRa
 
 
 
-    private void AddedToCart(String userEmail, int productId, int quantity, int totalPrice, int productDiscount) {
+    private void AddedToCart(String userEmail, String documentId, int quantity, int totalPrice, int productDiscount) {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference orderDetailRef = db.collection("AddToCart").document(); // Tạo một tài liệu mới
 
         // Tạo một đối tượng OrderDetail
-        CartModel cartModel = new CartModel(userEmail, productId, quantity, totalPrice, productDiscount);
+        CartModel cartModel = new CartModel(userEmail, documentId, quantity, totalPrice, productDiscount);
 
         // Thêm đối tượng vào Firestore
         orderDetailRef.set(cartModel)

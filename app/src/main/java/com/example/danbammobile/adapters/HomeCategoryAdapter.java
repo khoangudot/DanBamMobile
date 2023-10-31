@@ -20,7 +20,6 @@ import com.example.danbammobile.R;
 import com.example.danbammobile.interfaces.HomeLoadProducts;
 import com.example.danbammobile.models.CategoryModel;
 import com.example.danbammobile.models.ProductModel;
-import com.example.danbammobile.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -70,8 +69,8 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         holder.categoryName.setText(categoryModelList.get(position).getCategoryName());
 
         if(check) {
-            db.collection("Product")
-                    .whereEqualTo("CategoryId", (position+1))
+            db.collection("Products")
+                    .whereEqualTo("categoryId", (position+1))
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -83,7 +82,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
                                     productModels.add(productModel);
 
                                 }
-                                Log.d("ProductModelsSize", "Size: " + position);
+
                                 homeLoadProducts.CallBack(position+1, productModels);
                             } else {
                                 Toast.makeText(context, "Err" + task.getException(), Toast.LENGTH_SHORT).show();
@@ -101,8 +100,8 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
                 row_index = position;
                 notifyDataSetChanged();
 
-                db.collection("Product")
-                        .whereEqualTo("CategoryId", categoryId)
+                db.collection("Products")
+                        .whereEqualTo("categoryId", categoryId)
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override

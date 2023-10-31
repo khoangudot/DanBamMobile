@@ -17,7 +17,10 @@
             android:exported="false" />
         <activity
             android:name=".activities.manager.CreateProductActivity"
-            android:exported="false" />
+            android:parentActivityName=".activities.manager.ManageProductsActivity"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".activities.manager.ManageProductsActivity"
             android:exported="true">
@@ -53,6 +56,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".MainActivity"

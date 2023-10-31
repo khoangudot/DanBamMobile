@@ -3,90 +3,92 @@ package com.example.danbammobile.models;
 import java.io.Serializable;
 
 public class ProductModel implements Serializable {
-    private int ProductId;
-    private String ProductName;
-    private String ProductDescription;
-    private String ProductImage;
-    private int ProductPrice;
-    private int ProductDiscount;
-    private float ProductRating;
-    private int CategoryId;
+    private String productName;
+    private String productDescription;
+    private String productImage;
+    private int productPrice;
+    private int productDiscount;
+    private float productRating;
+    private int categoryId;
+    private String documentId;
 
     public ProductModel() {
     }
 
-    public ProductModel(int productId, String productName, String productDescription, String productImage, int productPrice, int productDiscount, float productRating, int categoryId) {
-        ProductId = productId;
-        ProductName = productName;
-        ProductDescription = productDescription;
-        ProductImage = productImage;
-        ProductPrice = productPrice;
-        ProductDiscount = productDiscount;
-        ProductRating = productRating;
-        CategoryId = categoryId;
+    public ProductModel( String productName, String productDescription, String productImage, int productPrice, int productDiscount, float productRating, int categoryId) {
+
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.productImage = productImage;
+        this.productPrice = productPrice;
+        this.productDiscount = productDiscount;
+        this.productRating = productRating;
+        this.categoryId = categoryId;
     }
 
-    public int getProductId() {
-        return ProductId;
-    }
 
-    public void setProductId(int productId) {
-        ProductId = productId;
-    }
 
     public String getProductName() {
-        return ProductName;
+        return productName;
     }
 
     public void setProductName(String productName) {
-        ProductName = productName;
+        this.productName = productName;
     }
 
     public String getProductDescription() {
-        return ProductDescription;
+        return productDescription;
     }
 
     public void setProductDescription(String productDescription) {
-        ProductDescription = productDescription;
+        this.productDescription = productDescription;
     }
 
     public String getProductImage() {
-        return ProductImage;
+        return productImage;
     }
 
     public void setProductImage(String productImage) {
-        ProductImage = productImage;
+        this.productImage = productImage;
     }
 
     public int getProductPrice() {
-        return ProductPrice;
+        return productPrice;
     }
 
     public void setProductPrice(int productPrice) {
-        ProductPrice = productPrice;
+        this.productPrice = productPrice;
     }
 
     public int getProductDiscount() {
-        return ProductDiscount;
+        return productDiscount;
     }
 
     public void setProductDiscount(int productDiscount) {
-        ProductDiscount = productDiscount;
+        this.productDiscount = productDiscount;
     }
 
     public float getProductRating() {
-        return ProductRating;
+        return productRating;
     }
 
     public void setProductRating(float productRating) {
-        ProductRating = productRating;
+        this.productRating = productRating;
     }
 
     public int getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(int categoryId) {
-        CategoryId = categoryId;
+        this.categoryId = categoryId;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 }

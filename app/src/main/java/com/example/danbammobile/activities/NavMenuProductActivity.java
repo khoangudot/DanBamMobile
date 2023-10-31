@@ -53,8 +53,8 @@ public class NavMenuProductActivity extends AppCompatActivity {
             recyclerView.setAdapter(adapter);
 
 
-            db.collection("Product")
-                    .whereEqualTo("CategoryId", categoryId)
+            db.collection("Products")
+                    .whereEqualTo("categoryId", categoryId)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

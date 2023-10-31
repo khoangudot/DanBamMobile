@@ -50,11 +50,10 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        int productId = cartModels.get(position).getProductId();
-        //Log.d("MyCartAdapter", "ItemCount: " + productId);
-        // Truy vấn Firestore để lấy thông tin sản phẩm dựa trên productId
-        db.collection("Product")
-                .whereEqualTo("ProductId", productId)
+        String documentId = cartModels.get(position).getDocumentId();
+
+        db.collection("Products")
+                .whereEqualTo("documentId", documentId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {

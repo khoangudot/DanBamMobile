@@ -63,7 +63,7 @@ public class ManageProductsActivity extends AppCompatActivity {
         manageProductsRec.setAdapter(manageProductAdapter);
 
 
-            db.collection("Product")
+            db.collection("Products")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

@@ -91,8 +91,8 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
         homeHighestRatingAdapter = new HomeHighestRatingAdapter(getActivity(), homeHighestRatingList);
         homeHighestRatingRecyclerView.setAdapter(homeHighestRatingAdapter);
 
-        db.collection("Product")
-                .orderBy("ProductRating", Query.Direction.DESCENDING) // Sắp xếp theo rating giảm dần
+        db.collection("Products")
+                .orderBy("productRating", Query.Direction.DESCENDING) // Sắp xếp theo rating giảm dần
                 .limit(10) // Giới hạn kết quả trả về 10 sản phẩm
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -180,8 +180,8 @@ public class HomeFragment extends Fragment implements HomeLoadProducts {
             String searchQueryNormalized = removeVietnameseAccents(searchQuery);
 
             // Sắp xếp kết quả tìm kiếm theo tên sản phẩm đã được chuẩn hóa
-            Query query = db.collection("Product")
-                    .orderBy("ProductName")
+            Query query = db.collection("Products")
+                    .orderBy("productName")
                     .startAt(searchQueryNormalized)
                     .endAt(searchQueryNormalized + "\uf8ff");
 
