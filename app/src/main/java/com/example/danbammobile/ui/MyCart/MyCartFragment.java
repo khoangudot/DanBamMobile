@@ -1,12 +1,9 @@
 package com.example.danbammobile.ui.MyCart;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,10 +130,7 @@ public class MyCartFragment extends Fragment {
         return root;
     }
 
-    private String getUserEmailFromSharedPreferences() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        return sharedPreferences.getString("userEmail", ""); // Trả về email lưu trong SharedPreferences
-    }
+
 
     public BroadcastReceiver mMessageReceiver =  new BroadcastReceiver() {
         @Override

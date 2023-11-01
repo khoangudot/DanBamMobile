@@ -50,10 +50,10 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        String documentId = cartModels.get(position).getDocumentId();
+        String productDocumentId = cartModels.get(position).getProductDocumentId();
 
         db.collection("Products")
-                .whereEqualTo("documentId", documentId)
+                .whereEqualTo("documentId", productDocumentId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
