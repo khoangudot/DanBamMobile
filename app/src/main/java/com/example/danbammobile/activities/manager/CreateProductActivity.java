@@ -62,6 +62,7 @@ public class CreateProductActivity extends AppCompatActivity {
 
 
     EditText ProductName, ProductDescription, ProductPrice, ProductDiscount;
+
     Button btnCreate;
     MaterialCardView ProductImage;
 
@@ -126,6 +127,7 @@ public class CreateProductActivity extends AppCompatActivity {
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CreateProduct();
                 UploadImage();
             }
         });
@@ -186,7 +188,7 @@ public class CreateProductActivity extends AppCompatActivity {
             });
     private void UploadImage(){
         if(imageUri != null){
-            final StorageReference myRef = storageReference.child("photo/products"+imageUri.getLastPathSegment());
+            final StorageReference myRef = storageReference.child("photo/products/"+imageUri.getLastPathSegment());
             myRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -195,8 +197,9 @@ public class CreateProductActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             if(uri != null){
                                 photoURl = uri.toString();
-                                CreateProduct();
+
                             }
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -221,38 +224,67 @@ public class CreateProductActivity extends AppCompatActivity {
         String productDescriptionStr = ProductDescription.getText().toString().trim();
         String productDiscountStr = ProductDiscount.getText().toString().trim();
         String productPriceStr = ProductPrice.getText().toString().trim();
-        if(TextUtils.isEmpty(productNameStr)|| TextUtils.isEmpty(productDescriptionStr)||TextUtils.isEmpty(productDiscountStr)||TextUtils.isEmpty(productPriceStr)){
-            Toast.makeText(this,"Please Fill AllFields", Toast.LENGTH_SHORT).show();
-        }else {
-            DocumentReference documentReference =firebaseFirestore.collection("Products").document();
-            ProductModel productModel = new ProductModel(productNameStr,productDescriptionStr,photoURl,Integer.parseInt(productPriceStr),Integer.parseInt(productDiscountStr),5,5);
-            documentReference.set(productModel, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        String DocId= documentReference.getId();
-                        productModel.setDocumentId(DocId);
-                        documentReference.set(productModel,SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    Toast.makeText(CreateProductActivity.this,"Update successfully", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(CreateProductActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
 
-                }
-            });
+        CategoryModel categoryModelSpinner = (CategoryModel) categorySpinner.getSelectedItem();
+        int categoryId = categoryModelSpinner.getCategoryId();
+        int productDiscount = 0;
+        int productPrice = 0;
+        // Data Validation
+        if (imageUri == null) {
+            Toast.makeText(CreateProductActivity.this, "Please select an image", Toast.LENGTH_SHORT).show();
+            return;
         }
+        if (TextUtils.isEmpty(productNameStr) || TextUtils.isEmpty(productDescriptionStr) || TextUtils.isEmpty(productDiscountStr) || TextUtils.isEmpty(productPriceStr)) {
+            Toast.makeText(CreateProductActivity.this, "Please Fill All Fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (productNameStr.length() > 50) {
+            Toast.makeText(CreateProductActivity.this, "Product name is too long (max 50 characters)", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (productDescriptionStr.length() > 250) {
+            Toast.makeText(CreateProductActivity.this, "Product description is too long (max 250 characters)", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (productDiscountStr.length() > 10 || productPriceStr.length() > 10) {
+            Toast.makeText(CreateProductActivity.this, "Discount and price should not exceed 10 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            productDiscount = Integer.parseInt(productDiscountStr);
+            productPrice = Integer.parseInt(productPriceStr);
+        } catch (NumberFormatException e) {
+            Toast.makeText(CreateProductActivity.this, "Discount and price must be valid integers", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        DocumentReference documentReference =firebaseFirestore.collection("Products").document();
+        ProductModel productModel = new ProductModel(productNameStr,productDescriptionStr,photoURl,productPrice,productDiscount,5,categoryId);
+        documentReference.set(productModel, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    String DocId= documentReference.getId();
+                    productModel.setDocumentId(DocId);
+                    documentReference.set(productModel,SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(CreateProductActivity.this,"Insert successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CreateProductActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
     }
 }
